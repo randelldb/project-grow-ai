@@ -19,6 +19,12 @@ function App() {
           type: "user_message",
           dateTime: "2020-03-01",
         },
+        {
+          id: 2,
+          text: "this is a second text",
+          type: "user_message",
+          dateTime: "2020-03-07",
+        },
       ],
     },
   ];
@@ -47,16 +53,16 @@ function App() {
         Chat
       </button>
 
-      <section>
-        {plants.map((plant) => (
-          <div onClick={() => console.log(plant)} key={plant.id}>
-            <div>{plant.name}</div>
-            <div>{plant.species}</div>
-          </div>
-        ))}
-      </section>
+      {/*<section>*/}
+      {/*  {plants.map((plant) => (*/}
+      {/*    <div onClick={() => console.log(plant)} key={plant.id}>*/}
+      {/*      <div>{plant.name}</div>*/}
+      {/*      <div>{plant.species}</div>*/}
+      {/*    </div>*/}
+      {/*  ))}*/}
+      {/*</section>*/}
+      {/*<hr />*/}
 
-      <hr />
       <section>
         {activeTab === "overview" && (
           <>
@@ -67,13 +73,19 @@ function App() {
         )}
 
         {activeTab === "timeline" &&
-          plants[0].history.map((item) => (
-            <div key={item.id}>
-              <div>{item.text}</div>
-              <div>{item.type}</div>
-              <div>{item.dateTime}</div>
-            </div>
-          ))}
+          plants[0].history
+            .sort((a, b) => {
+              return (
+                new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime()
+              );
+            })
+            .map((item) => (
+              <div key={item.id}>
+                <div>{item.text}</div>
+                <div>{item.type}</div>
+                <div>{item.dateTime}</div>
+              </div>
+            ))}
 
         {activeTab === "chat" && <div>Chat content</div>}
       </section>
