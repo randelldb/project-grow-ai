@@ -1,10 +1,13 @@
 import "./App.css";
 import type { Plant } from "./types/plant.ts";
 import { useState } from "react";
+import type { ActiveTab } from "./types/ui.ts";
+import Tabs from "./components/Tabs.tsx";
+import OverviewTab from "./components/OverviewTab.tsx";
+import TimelineTab from "./components/TimelineTab.tsx";
+import ChatTab from "./components/ChatTab.tsx";
 
 function App() {
-  type ActiveTab = "overview" | "timeline" | "chat";
-
   const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatImage, setChatImage] = useState<File | null>(null);
@@ -36,24 +39,8 @@ function App() {
   return (
     <>
       <h1>Project grow ai</h1>
-      <button
-        onClick={() => setActiveTab("overview")}
-        className={activeTab === "overview" ? "activeTab" : ""}
-      >
-        Overview
-      </button>
-      <button
-        onClick={() => setActiveTab("timeline")}
-        className={activeTab === "timeline" ? "activeTab" : ""}
-      >
-        Timeline
-      </button>
-      <button
-        onClick={() => setActiveTab("chat")}
-        className={activeTab === "chat" ? "activeTab" : ""}
-      >
-        Chat
-      </button>
+
+      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/*<section>*/}
       {/*  {plants.map((plant) => (*/}
@@ -67,61 +54,22 @@ function App() {
 
       <section>
         {activeTab === "overview" && (
-          <>
-            <div>{plants[0].name}</div>
-            <div>{plants[0].species}</div>
-            <div>{latestTimelineItem && latestTimelineItem.text}</div>
-          </>
+          <OverviewTab
+            plant={plants[0]}
+            latestTimelineItem={latestTimelineItem}
+          />
         )}
 
-        {activeTab === "timeline" &&
-          plants[0].history
-            .sort((a, b) => {
-              return (
-                new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime()
-              );
-            })
-            .map((item) => (
-              <div key={item.id}>
-                <div>{item.text}</div>
-                <div>{item.type}</div>
-                <div>{item.dateTime}</div>
-              </div>
-            ))}
+        {activeTab === "timeline" && <TimelineTab plant={plants[0]} />}
 
         {activeTab === "chat" && (
-          <>
-            <div>Chat about {plants[0].name}</div>
-            <div>
-              <input
-                type={"text"}
-                value={chatMessage}
-                onChange={(e) => setChatMessage(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                type={"file"}
-                onChange={(e) => {
-                  if (e.target.files && e.target.files.length > 0) {
-                    setChatImage(e.target.files[0]);
-                  }
-                }}
-              />
-              {chatImage && "selected" + chatImage.name}
-            </div>
-            <div>
-              <button
-                onClick={() => {
-                  console.log(chatMessage, chatImage);
-                  setChatMessage("");
-                  setChatImage(null);
-                }}
-              >
-                Send
-              </button>
-            </div>
-          </>
+          <ChatTab
+            plant={plants[0]}
+            chatMessage={chatMessage}
+            setChatMessage={setChatMessage}
+            chatImage={chatImage}
+            setChatImage={setChatImage}
+          />
         )}
       </section>
     </>
