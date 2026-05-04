@@ -23,6 +23,8 @@ function App() {
     },
   ];
 
+  const latestTimelineItem = plants[0].history[plants[0].history.length - 1];
+
   return (
     <>
       <h1>Project grow ai</h1>
@@ -60,6 +62,7 @@ function App() {
           <>
             <div>{plants[0].name}</div>
             <div>{plants[0].species}</div>
+            <div>{latestTimelineItem && latestTimelineItem.text}</div>
           </>
         )}
 
