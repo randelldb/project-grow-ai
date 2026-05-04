@@ -33,7 +33,16 @@ function ChatTab(props: ChatTabProps) {
       <div>
         <button
           onClick={() => {
-            console.log(props.chatMessage, props.chatImage);
+            let aiContext = {
+              plantName: props.plant.name,
+              plantSpecies: props.plant.species,
+              timelineItems: props.plant.history,
+              message: props.chatMessage,
+              image: props.chatImage,
+            };
+
+            console.log(aiContext);
+
             props.setChatMessage("");
             props.setChatImage(null);
           }}
