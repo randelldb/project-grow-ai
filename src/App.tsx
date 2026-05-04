@@ -6,6 +6,7 @@ function App() {
   type ActiveTab = "overview" | "timeline" | "chat";
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
+  const [chatMessage, setChatMessage] = useState<string>("");
 
   let plants: Plant[] = [
     {
@@ -87,7 +88,28 @@ function App() {
               </div>
             ))}
 
-        {activeTab === "chat" && <div>Chat content</div>}
+        {activeTab === "chat" && (
+          <>
+            <div>Chat about {plants[0].name}</div>
+            <div>
+              <input
+                type={"text"}
+                value={chatMessage}
+                onChange={(e) => setChatMessage(e.target.value)}
+              />
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  console.log(chatMessage);
+                  setChatMessage("");
+                }}
+              >
+                Send
+              </button>
+            </div>
+          </>
+        )}
       </section>
     </>
   );
