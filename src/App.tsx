@@ -7,6 +7,7 @@ function App() {
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
   const [chatMessage, setChatMessage] = useState<string>("");
+  const [chatImage, setChatImage] = useState<File | null>(null);
 
   let plants: Plant[] = [
     {
@@ -99,10 +100,22 @@ function App() {
               />
             </div>
             <div>
+              <input
+                type={"file"}
+                onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    setChatImage(e.target.files[0]);
+                  }
+                }}
+              />
+              {chatImage && "selected" + chatImage.name}
+            </div>
+            <div>
               <button
                 onClick={() => {
-                  console.log(chatMessage);
+                  console.log(chatMessage, chatImage);
                   setChatMessage("");
+                  setChatImage(null);
                 }}
               >
                 Send
