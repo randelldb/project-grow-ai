@@ -1,4 +1,5 @@
 import type { Plant } from "../types/plant.ts";
+import type { TimelineItem } from "../types/timelineItem.ts";
 
 type ChatTabProps = {
   plant: Plant;
@@ -6,6 +7,7 @@ type ChatTabProps = {
   setChatMessage: (message: string) => void;
   chatImage: File | null;
   setChatImage: (image: File | null) => void;
+  addTimelineItem: (item: TimelineItem) => void;
 };
 
 function ChatTab(props: ChatTabProps) {
@@ -49,6 +51,24 @@ function ChatTab(props: ChatTabProps) {
         >
           Send
         </button>
+        <div>
+          AI answer: This is a mock AI response
+          <button
+            onClick={() => {
+              let newTimelineItem: TimelineItem = {
+                id: 1,
+                text: "AI answer: This is a mock AI response",
+                type: "ai_response",
+                dateTime: "2020-03-01",
+              };
+
+              console.log(newTimelineItem);
+              props.addTimelineItem(newTimelineItem);
+            }}
+          >
+            Save to timeline
+          </button>
+        </div>
       </div>
     </>
   );

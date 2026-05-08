@@ -6,13 +6,13 @@ import Tabs from "./components/Tabs.tsx";
 import OverviewTab from "./components/OverviewTab.tsx";
 import TimelineTab from "./components/TimelineTab.tsx";
 import ChatTab from "./components/ChatTab.tsx";
+import type { TimelineItem } from "./types/timelineItem.ts";
 
 function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatImage, setChatImage] = useState<File | null>(null);
-
-  let plants: Plant[] = [
+  const [plants, setPlants] = useState<Plant[]>([
     {
       id: 1,
       name: "Tomato",
@@ -32,9 +32,20 @@ function App() {
         },
       ],
     },
-  ];
+  ]);
 
   const latestTimelineItem = plants[0].history[plants[0].history.length - 1];
+
+  function addTimelineItem(item: TimelineItem) {
+    console.log(item);
+
+    const updatedPlant: Plant = {
+      ...plants[0],
+      history: [...plants[0].history, item],
+    };
+
+    setPlants([updatedPlant]);
+  }
 
   return (
     <>
@@ -69,6 +80,7 @@ function App() {
             setChatMessage={setChatMessage}
             chatImage={chatImage}
             setChatImage={setChatImage}
+            addTimelineItem={addTimelineItem}
           />
         )}
       </section>
