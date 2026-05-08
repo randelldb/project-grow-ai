@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# Phase 1 Product Rules
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Chat as workspace
 
-Currently, two official plugins are available:
+The chat is treated as the active workspace for the user. Users can ask questions, upload images, and interact with the AI without automatically storing all conversation data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Timeline as saved plant record
 
-## React Compiler
+The timeline is the long-term saved record for a plant. Timeline items represent information the user intentionally wants to keep.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Manual timeline saving
 
-## Expanding the ESLint configuration
+AI responses are not automatically added to the timeline. Users must explicitly choose the "Save to timeline" action before an item becomes part of the plant history.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## AI context rules in Phase 1
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+In Phase 1, the AI context is intentionally limited.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The AI context includes:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+* Plant name
+* Plant species
+* Timeline items
+* Current chat message
+* Current uploaded image (when available)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The AI context does not include:
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+* Full chat history
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+This keeps the timeline as the primary source of saved plant context.
+
+## Phase 1 scope
+
+This repository currently focuses on the Phase 1 product scope.
+
+Phase 1 focuses on:
+
+* Plant overview
+* Timeline system
+* Chat workspace
+* Manual timeline saving
+* AI context preparation
