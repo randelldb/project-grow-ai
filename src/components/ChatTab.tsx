@@ -2,7 +2,7 @@ import type { Plant } from "../types/plant.ts";
 import type { TimelineItem } from "../types/timelineItem.ts";
 
 type ChatTabProps = {
-  plant: Plant;
+  plant: Plant | null;
   chatMessage: string;
   setChatMessage: (message: string) => void;
   chatImage: File | null;
@@ -11,9 +11,15 @@ type ChatTabProps = {
 };
 
 function ChatTab(props: ChatTabProps) {
+  if (!props.plant) {
+    return null;
+  }
+
+  const plant = props.plant;
+
   return (
     <>
-      <div>Chat about {props.plant.name}</div>
+      <div>Chat about {plant.name}</div>
       <div>
         <input
           type={"text"}
@@ -36,9 +42,9 @@ function ChatTab(props: ChatTabProps) {
         <button
           onClick={() => {
             let aiContext = {
-              plantName: props.plant.name,
-              plantSpecies: props.plant.species,
-              timelineItems: props.plant.history,
+              plantName: plant.name,
+              plantSpecies: plant.species,
+              timelineItems: plant.history,
               message: props.chatMessage,
               image: props.chatImage,
             };

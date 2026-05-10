@@ -1,11 +1,17 @@
 import type { Plant } from "../types/plant.ts";
 
 type TimelineTabProps = {
-  plant: Plant;
+  plant: Plant | null;
 };
 
 function TimelineTab(props: TimelineTabProps) {
-  return props.plant.history
+  if (!props.plant) {
+    return null;
+  }
+
+  const plant = props.plant;
+
+  return plant.history
     .sort((a, b) => {
       return new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
     })

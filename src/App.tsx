@@ -90,15 +90,20 @@ function App() {
       ],
     },
   ]);
+  const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
 
-  const latestTimelineItem = plants[0].history[plants[0].history.length - 1];
+  const latestTimelineItem =
+    selectedPlant?.history[selectedPlant.history.length - 1];
 
   function addTimelineItem(item: TimelineItem) {
+    if (!selectedPlant) {
+      return null;
+    }
     console.log(item);
 
     const updatedPlant: Plant = {
-      ...plants[0],
-      history: [...plants[0].history, item],
+      ...selectedPlant,
+      history: [...selectedPlant.history, item],
     };
 
     setPlants([updatedPlant]);
@@ -110,7 +115,13 @@ function App() {
 
       <section>
         {plants.map((plant) => (
-          <div onClick={() => console.log(plant)} key={plant.id}>
+          <div
+            onClick={() => {
+              console.log(plant);
+              setSelectedPlant(plant);
+            }}
+            key={plant.id}
+          >
             <div>------------</div>
             <div>{plant.name}</div>
             <div>{plant.species}</div>
@@ -122,29 +133,32 @@ function App() {
       <hr />
       <hr />
 
-      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      {selectedPlant && (
+        <>
+          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          <section>
+            {activeTab === "overview" && (
+              <OverviewTab
+                plant={selectedPlant}
+                latestTimelineItem={latestTimelineItem}
+              />
+            )}
 
-      <section>
-        {activeTab === "overview" && (
-          <OverviewTab
-            plant={plants[0]}
-            latestTimelineItem={latestTimelineItem}
-          />
-        )}
+            {activeTab === "timeline" && <TimelineTab plant={selectedPlant} />}
 
-        {activeTab === "timeline" && <TimelineTab plant={plants[0]} />}
-
-        {activeTab === "chat" && (
-          <ChatTab
-            plant={plants[0]}
-            chatMessage={chatMessage}
-            setChatMessage={setChatMessage}
-            chatImage={chatImage}
-            setChatImage={setChatImage}
-            addTimelineItem={addTimelineItem}
-          />
-        )}
-      </section>
+            {activeTab === "chat" && (
+              <ChatTab
+                plant={selectedPlant}
+                chatMessage={chatMessage}
+                setChatMessage={setChatMessage}
+                chatImage={chatImage}
+                setChatImage={setChatImage}
+                addTimelineItem={addTimelineItem}
+              />
+            )}
+          </section>
+        </>
+      )}
     </>
   );
 }
