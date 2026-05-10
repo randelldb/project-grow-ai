@@ -20,15 +20,72 @@ function App() {
       history: [
         {
           id: 1,
-          text: "this is a text",
+          text: "Leaves are starting to curl slightly",
           type: "user_message",
-          dateTime: "2020-03-01",
+          dateTime: "2026-05-01",
         },
         {
           id: 2,
-          text: "this is a second text",
+          text: "AI suggested increasing watering frequency",
+          type: "ai_response",
+          dateTime: "2026-05-02",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Basil",
+      species: "Genovese",
+      history: [
+        {
+          id: 1,
+          text: "Plant moved closer to the window",
           type: "user_message",
-          dateTime: "2020-03-07",
+          dateTime: "2026-05-03",
+        },
+        {
+          id: 2,
+          text: "New healthy leaves appeared",
+          type: "user_message",
+          dateTime: "2026-05-05",
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "Monstera",
+      species: "Deliciosa",
+      history: [
+        {
+          id: 1,
+          text: "Brown spots noticed on lower leaves",
+          type: "user_message",
+          dateTime: "2026-05-04",
+        },
+        {
+          id: 2,
+          text: "AI suggested checking humidity levels",
+          type: "ai_response",
+          dateTime: "2026-05-05",
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "Strawberry",
+      species: "Albion",
+      history: [
+        {
+          id: 1,
+          text: "First flowers started blooming",
+          type: "user_message",
+          dateTime: "2026-05-01",
+        },
+        {
+          id: 2,
+          text: "Small strawberries are beginning to form",
+          type: "user_message",
+          dateTime: "2026-05-06",
         },
       ],
     },
@@ -51,17 +108,21 @@ function App() {
     <>
       <h1>Project grow ai</h1>
 
-      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      <section>
+        {plants.map((plant) => (
+          <div onClick={() => console.log(plant)} key={plant.id}>
+            <div>------------</div>
+            <div>{plant.name}</div>
+            <div>{plant.species}</div>
+          </div>
+        ))}
+      </section>
 
-      {/*<section>*/}
-      {/*  {plants.map((plant) => (*/}
-      {/*    <div onClick={() => console.log(plant)} key={plant.id}>*/}
-      {/*      <div>{plant.name}</div>*/}
-      {/*      <div>{plant.species}</div>*/}
-      {/*    </div>*/}
-      {/*  ))}*/}
-      {/*</section>*/}
-      {/*<hr />*/}
+      <br />
+      <hr />
+      <hr />
+
+      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <section>
         {activeTab === "overview" && (
