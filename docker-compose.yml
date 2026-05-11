@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: grow-ai-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: growai
+      POSTGRES_PASSWORD: growai
+      POSTGRES_DB: grow_ai
+    ports:
+      - "5432:5432"

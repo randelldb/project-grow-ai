@@ -1,4 +1,5 @@
 import express from "express";
+import "./database/db.js";
 
 const app = express()
 const port = 3000
