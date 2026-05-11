@@ -20,6 +20,7 @@ function TimelineTab(props: TimelineTabProps) {
         <div>{item.text}</div>
         <div>{item.type}</div>
         <div>{item.dateTime}</div>
+        <br />
       </div>
     ));
 }

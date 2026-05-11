@@ -106,7 +106,17 @@ function App() {
       history: [...selectedPlant.history, item],
     };
 
-    setPlants([updatedPlant]);
+    setPlants(
+      plants.map((plant) => {
+        if (plant.id === selectedPlant.id) {
+          return updatedPlant;
+        }
+
+        return plant;
+      }),
+    );
+
+    setSelectedPlant(updatedPlant);
   }
 
   return (
